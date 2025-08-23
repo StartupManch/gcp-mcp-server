@@ -35,13 +35,13 @@ jobs:
         run: npm run lint
 
       - name: Run tests
-        run: npm test
+        run: npm run test:coverage
 
       - name: Run build
         run: npm run build
 
       - name: Upload coverage reports
-        if: matrix.node-version == 18
+        if: matrix.node-version == 24
         uses: codecov/codecov-action@v3
         with:
           file: ./coverage/lcov.info
@@ -130,7 +130,7 @@ jobs:
           name: package-${{ github.sha }}
 
       - name: Run integration tests
-        run: npm run test -- --testPathPattern=integration
+        run: npm run test -- --testPathPatterns=integration
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}

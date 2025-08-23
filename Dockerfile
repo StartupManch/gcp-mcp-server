@@ -7,13 +7,13 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
-
-# Copy source code
+# Copy source code first
 COPY src/ ./src/
 
-# Build the application
+# Install all dependencies (including dev dependencies for building)
+RUN npm ci && npm cache clean --force
+
+# Build the application (may be redundant due to prepare script, but ensures build)
 RUN npm run build
 
 # Production image
@@ -28,10 +28,14 @@ RUN addgroup -g 1001 -S nodejs && \
 
 WORKDIR /app
 
+# Copy package files for production install
+COPY package*.json ./
+
+# Install only production dependencies (ignore scripts to prevent build attempts)
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
+
 # Copy built application and dependencies
 COPY --from=builder --chown=1001:1001 /app/dist ./dist
-COPY --from=builder --chown=1001:1001 /app/node_modules ./node_modules
-COPY --from=builder --chown=1001:1001 /app/package*.json ./
 
 # Create directory for logs and temp files
 RUN mkdir -p /app/logs && chown -R 1001:1001 /app
