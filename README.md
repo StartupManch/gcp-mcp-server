@@ -1,7 +1,7 @@
 # GCP MCP Server
 
 [![Version](https://img.shields.io/npm/v/gcp-mcp-server)](https://www.npmjs.com/package/gcp-mcp-server)
-[![License](https://img.shields.io/github/license/startupmanch/gcp-mcp)](https://github.com/startupmanch/gcp-mcp/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/startupmanch/gcp-mcp-server)](https://github.com/startupmanch/gcp-mcp-server/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 
 A Model Context Protocol (MCP) server that enables **any MCP-compatible AI assistant** to interact with your Google Cloud Platform environment. This allows for natural language querying and management of your GCP resources during conversations with AI assistants like Claude, Cursor, Windsurf, and any other MCP-compatible applications.
@@ -121,8 +121,8 @@ src/
 ### Setup
 
 ```bash
-git clone https://github.com/startupmanch/gcp-mcp
-cd gcp-mcp
+git clone https://github.com/startupmanch/gcp-mcp-server
+cd gcp-mcp-server
 npm install
 npm run build
 ```
@@ -190,7 +190,7 @@ If you installed from source:
       "args": [
         "--silent",
         "--prefix",
-        "/path/to/gcp-mcp",
+        "/path/to/gcp-mcp-server",
         "start"
       ]
     }
@@ -198,7 +198,7 @@ If you installed from source:
 }
 ````
 
-Replace `/path/to/gcp-mcp` with the actual path to your project directory if using source installation.
+Replace `/path/to/gcp-mcp-server` with the actual path to your project directory if using source installation.
 
 ### Cursor
 

@@ -38,8 +38,8 @@ npx gcp-mcp-server
 #### Option 2: Local Development
 
 ```bash
-git clone https://github.com/startupmanch/gcp-mcp
-cd gcp-mcp
+git clone https://github.com/startupmanch/gcp-mcp-server
+cd gcp-mcp-server
 npm install
 npm run build
 npm start
@@ -178,8 +178,8 @@ src/
 ### Setup Development Environment
 
 ```bash
-git clone https://github.com/startupmanch/gcp-mcp
-cd gcp-mcp
+git clone https://github.com/startupmanch/gcp-mcp-server
+cd gcp-mcp-server
 npm install
 ```
 
@@ -300,9 +300,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/startupmanch/gcp-mcp/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/startupmanch/gcp-mcp/discussions)
-- **Email**: [Support Email](mailto:support@yourproject.com)
+- **Issues**: [GitHub Issues](https://github.com/startupmanch/gcp-mcp-server/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/startupmanch/gcp-mcp-server/discussions)
+- **Email**: [Support Email](mailto:devesh@startupmanch.in)
 
 ---
 

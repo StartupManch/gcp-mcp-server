@@ -17,8 +17,8 @@ import { ClusterManagerClient } from '@google-cloud/container';
 import { Logging, Entry, Log } from '@google-cloud/logging';
 import { SqlInstancesServiceClient } from '@google-cloud/sql';
 
-import { ToolCallArgs, ToolResponse, ExecutionResult, createTextResponse } from '../types';
-import { logger, withRetry, handleError, stateManager } from '../utils';
+import { ToolCallArgs, ToolResponse, createTextResponse } from '../types';
+import { logger, withRetry, stateManager } from '../utils';
 import { CONFIG } from '../config';
 
 export class GCPToolHandlers {
@@ -320,7 +320,12 @@ export class GCPToolHandlers {
           'google-auth-library': { GoogleAuth },
         };
 
-        return moduleMap[moduleName] || require(moduleName);
+        return (
+          moduleMap[moduleName] ||
+          (() => {
+            throw new Error(`Module ${moduleName} not available in sandbox`);
+          })()
+        );
       },
       console,
       projectId,
