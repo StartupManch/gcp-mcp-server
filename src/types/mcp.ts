@@ -6,7 +6,7 @@ export interface MCPTool {
   name: string;
   description: string;
   inputSchema: {
-    type: "object";
+    type: 'object';
     properties: Record<string, any>;
     required: string[];
   };
@@ -23,7 +23,11 @@ export interface ToolCallArgs {
 
 export interface ToolResponse {
   content: Array<{
-    type: "text";
+    type: 'text';
     text: string;
   }>;
 }
+
+export const createTextResponse = (text: string): ToolResponse => ({
+  content: [{ type: 'text', text }],
+});

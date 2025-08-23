@@ -1,22 +1,22 @@
 /**
  * GCP MCP Server - Main entry point
- * 
+ *
  * This is a Model Context Protocol (MCP) server that enables AI assistants
  * to interact with Google Cloud Platform resources through natural language.
  */
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
   CallToolRequest,
-} from "@modelcontextprotocol/sdk/types.js";
+} from '@modelcontextprotocol/sdk/types.js';
 
 import { gcpTools, GCPToolHandlers } from './tools';
 import { logger, stateManager } from './utils';
 import { CONFIG } from './config';
-import { ToolCallArgs } from './types';
+import { ToolCallArgs, createTextResponse } from './types';
 
 /**
  * Main GCP MCP Server class
@@ -56,43 +56,53 @@ class GCPMCPServer {
     });
 
     // Handle tool calls
-    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    this.server.setRequestHandler(CallToolRequestSchema, async request => {
       const { name, arguments: args } = request.params;
-      
+
       logger.info(`Tool called: ${name}`);
       logger.debug('Tool arguments:', args);
 
       try {
+        let result: any;
+
         switch (name) {
-          case "run-gcp-code":
-            return await this.toolHandlers.executeGCPCode(args as ToolCallArgs);
-          
-          case "list-projects":
-            return await this.toolHandlers.listProjects();
-          
-          case "select-project":
-            return await this.toolHandlers.selectProject(args as ToolCallArgs);
-          
-          case "get-billing-info":
-            return await this.toolHandlers.getBillingInfo(args as ToolCallArgs);
-          
-          case "get-cost-forecast":
-            return await this.toolHandlers.getCostForecast(args as ToolCallArgs);
-          
+          case 'run-gcp-code':
+            result = await this.toolHandlers.executeGCPCode(args as ToolCallArgs);
+            break;
+
+          case 'list-projects':
+            result = await this.toolHandlers.listProjects();
+            break;
+
+          case 'select-project':
+            result = await this.toolHandlers.selectProject(args as ToolCallArgs);
+            break;
+
+          case 'get-billing-info':
+            result = await this.toolHandlers.getBillingInfo(args as ToolCallArgs);
+            break;
+
+          case 'get-cost-forecast':
+            result = await this.toolHandlers.getCostForecast(args as ToolCallArgs);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
+
+        return result;
       } catch (error) {
         logger.error(`Error handling tool ${name}:`, error as Error);
-        return {
-          content: [{
-            type: "text",
-            text: JSON.stringify({
+        return createTextResponse(
+          JSON.stringify(
+            {
               success: false,
-              error: error instanceof Error ? error.message : String(error)
-            }, null, 2)
-          }]
-        };
+              error: error instanceof Error ? error.message : String(error),
+            },
+            null,
+            2
+          )
+        );
       }
     });
   }
@@ -101,7 +111,7 @@ class GCPMCPServer {
    * Setup global error handlers
    */
   private setupErrorHandlers(): void {
-    process.on('uncaughtException', (error) => {
+    process.on('uncaughtException', error => {
       logger.error('Uncaught Exception:', error);
       process.exit(1);
     });
@@ -127,17 +137,19 @@ class GCPMCPServer {
    */
   async start(): Promise<void> {
     logger.info(`Starting ${CONFIG.SERVER.NAME} v${CONFIG.SERVER.VERSION}`);
-    
+
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    
+
     logger.info('GCP MCP Server started successfully');
     logger.info(`Selected region: ${stateManager.getSelectedRegion()}`);
-    
+
     if (stateManager.isProjectSelected()) {
       logger.info(`Selected project: ${stateManager.getSelectedProject()}`);
     } else {
-      logger.info('No project selected. Use list-projects and select-project tools to get started.');
+      logger.info(
+        'No project selected. Use list-projects and select-project tools to get started.'
+      );
     }
   }
 
@@ -166,7 +178,7 @@ async function main(): Promise<void> {
 
 // Start the server if this file is run directly
 if (require.main === module) {
-  main().catch((error) => {
+  main().catch(error => {
     logger.error('Server startup failed:', error);
     process.exit(1);
   });
