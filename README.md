@@ -1,10 +1,10 @@
 # GCP MCP Server
 
-[![Version](https://img.shields.io/npm/v/gcp-mcp)](https://www.npmjs.com/package/gcp-mcp)
-[![License](https://img.shields.io/github/license/eniayomi/gcp-mcp)](https://github.com/eniayomi/gcp-mcp/blob/main/LICENSE)
+[![Version](https://img.shields.io/npm/v/gcp-mcp-server)](https://www.npmjs.com/package/gcp-mcp-server)
+[![License](https://img.shields.io/github/license/startupmanch/gcp-mcp)](https://github.com/startupmanch/gcp-mcp/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 
-A Model Context Protocol (MCP) server that enables AI assistants like Claude to interact with your Google Cloud Platform environment. This allows for natural language querying and management of your GCP resources during conversations.
+A Model Context Protocol (MCP) server that enables **any MCP-compatible AI assistant** to interact with your Google Cloud Platform environment. This allows for natural language querying and management of your GCP resources during conversations with AI assistants like Claude, Cursor, Windsurf, and any other MCP-compatible applications.
 
 ![GCP MCP Demo](images/claude.png)
 
@@ -31,10 +31,10 @@ A Model Context Protocol (MCP) server that enables AI assistants like Claude to 
 
 ```bash
 # Via NPX (Recommended)
-npx gcp-mcp
+npx gcp-mcp-server
 
 # Or install globally
-npm install -g gcp-mcp
+npm install -g gcp-mcp-server
 ```
 
 ### Configuration
@@ -49,7 +49,7 @@ npm install -g gcp-mcp
   "mcpServers": {
     "gcp": {
       "command": "sh",
-      "args": ["-c", "npx -y gcp-mcp"]
+      "args": ["-c", "npx -y gcp-mcp-server"]
     }
   }
 }
@@ -64,7 +64,7 @@ Add to your workspace configuration:
   "mcpServers": {
     "gcp": {
       "command": "sh",
-      "args": ["-c", "npx -y gcp-mcp"]
+      "args": ["-c", "npx -y gcp-mcp-server"]
     }
   }
 }
@@ -121,7 +121,7 @@ src/
 ### Setup
 
 ```bash
-git clone https://github.com/eniayomi/gcp-mcp
+git clone https://github.com/startupmanch/gcp-mcp
 cd gcp-mcp
 npm install
 npm run build
@@ -209,7 +209,7 @@ Replace `/path/to/gcp-mcp` with the actual path to your project directory if usi
 ```json
 {
   "gcp": {
-    "command": "npx -y gcp-mcp"
+    "command": "npx -y gcp-mcp-server"
   }
 }
 ```
@@ -223,7 +223,7 @@ Replace `/path/to/gcp-mcp` with the actual path to your project directory if usi
 {
   "mcpServers": {
     "gcp": {
-      "command": "npx -y gcp-mcp"
+      "command": "npx -y gcp-mcp-server"
     }
   }
 }

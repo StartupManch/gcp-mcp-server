@@ -4,11 +4,11 @@
 
 export const CONFIG = {
   SERVER: {
-    NAME: "gcp-mcp",
-    VERSION: "1.0.2",
+    NAME: 'gcp-mcp-server',
+    VERSION: '1.0.1',
   },
   DEFAULTS: {
-    REGION: "us-central1",
+    REGION: 'us-central1',
     MAX_RETRIES: 3,
     RETRY_DELAY: 1000,
   },

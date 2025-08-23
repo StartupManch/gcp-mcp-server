@@ -1,42 +1,44 @@
 # GCP MCP Server
 
-[![Version](https://img.shields.io/npm/v/gcp-mcp)](https://www.npmjs.com/package/gcp-mcp)
-[![License](https://img.shields.io/github/license/eniayomi/gcp-mcp)](https://github.com/eniayomi/gcp-mcp/blob/main/LICENSE)
+[![Version](https://img.shields.io/npm/v/gcp-mcp-server)](https://www.npmjs.com/package/gcp-mcp-server)
+[![License](https://img.shields.io/github/license/startupmanch/gcp-mcp)](https://github.com/startupmanch/gcp-mcp/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 
-A sophisticated Model Context Protocol (MCP) server that enables AI assistants like Claude to interact seamlessly with your Google Cloud Platform environment through natural language.
+A sophisticated Model Context Protocol (MCP) server that enables **any MCP-compatible AI assistant** to interact seamlessly with your Google Cloud Platform environment through natural language. Works with Claude, Cursor, Windsurf, and any other MCP-compatible application.
 
 ![GCP MCP Demo](images/claude.png)
 
 ## ✨ Features
 
-* 🔍 **Natural Language Querying**: Interact with GCP resources using plain English
-* ☁️ **Multi-Project Support**: Work across multiple GCP projects effortlessly  
-* 🌐 **Multi-Region Operations**: Support for all GCP regions worldwide
-* 🔐 **Secure Authentication**: Uses your local GCP credentials (ADC) - no external credential sharing
-* 🏃‍♂️ **Local Execution**: All operations run locally with your authenticated session
-* 🔄 **Automatic Retries**: Built-in retry logic for improved reliability
-* 📊 **Rich Logging**: Comprehensive logging with configurable levels
-* 🛠️ **TypeScript**: Fully typed codebase for better developer experience
+- 🔍 **Natural Language Querying**: Interact with GCP resources using plain English
+- ☁️ **Multi-Project Support**: Work across multiple GCP projects effortlessly
+- 🌐 **Multi-Region Operations**: Support for all GCP regions worldwide
+- 🔐 **Secure Authentication**: Uses your local GCP credentials (ADC) - no external credential sharing
+- 🏃‍♂️ **Local Execution**: All operations run locally with your authenticated session
+- 🔄 **Automatic Retries**: Built-in retry logic for improved reliability
+- 📊 **Rich Logging**: Comprehensive logging with configurable levels
+- 🛠️ **TypeScript**: Fully typed codebase for better developer experience
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-* **Node.js** v18 or higher
-* **Claude Desktop**, **Cursor**, or **Windsurf** IDE
-* **GCP CLI** configured with your credentials (`gcloud auth application-default login`)
+- **Node.js** v18 or higher
+- **Claude Desktop**, **Cursor**, or **Windsurf** IDE
+- **GCP CLI** configured with your credentials (`gcloud auth application-default login`)
 
 ### Installation
 
 #### Option 1: NPM (Recommended)
+
 ```bash
-npx gcp-mcp
+npx gcp-mcp-server
 ```
 
 #### Option 2: Local Development
+
 ```bash
-git clone https://github.com/eniayomi/gcp-mcp
+git clone https://github.com/startupmanch/gcp-mcp
 cd gcp-mcp
 npm install
 npm run build
@@ -52,18 +54,20 @@ npm start
 2. Add the server configuration to your `claude_desktop_config.json`:
 
 **Using NPX (Recommended):**
+
 ```json
 {
   "mcpServers": {
     "gcp": {
       "command": "sh",
-      "args": ["-c", "npx -y gcp-mcp"]
+      "args": ["-c", "npx -y gcp-mcp-server"]
     }
   }
 }
 ```
 
 **Using Local Installation:**
+
 ```json
 {
   "mcpServers": {
@@ -83,8 +87,8 @@ Add to your workspace `.cursorrules` or editor configuration:
 {
   "mcpServers": {
     "gcp": {
-      "command": "sh", 
-      "args": ["-c", "npx -y gcp-mcp"]
+      "command": "sh",
+      "args": ["-c", "npx -y gcp-mcp-server"]
     }
   }
 }
@@ -92,13 +96,13 @@ Add to your workspace `.cursorrules` or editor configuration:
 
 ## 🛠️ Available Tools
 
-| Tool | Description | Parameters |
-|------|-------------|------------|
-| `list-projects` | List all accessible GCP projects | None |
-| `select-project` | Select a project for operations | `projectId`, `region?` |
-| `run-gcp-code` | Execute GCP operations via code | `reasoning`, `code`, `projectId?`, `region?` |
-| `get-billing-info` | Get project billing information | `projectId?` |
-| `get-cost-forecast` | Get cost forecasting data | `projectId?`, `months?` |
+| Tool                | Description                      | Parameters                                   |
+| ------------------- | -------------------------------- | -------------------------------------------- |
+| `list-projects`     | List all accessible GCP projects | None                                         |
+| `select-project`    | Select a project for operations  | `projectId`, `region?`                       |
+| `run-gcp-code`      | Execute GCP operations via code  | `reasoning`, `code`, `projectId?`, `region?` |
+| `get-billing-info`  | Get project billing information  | `projectId?`                                 |
+| `get-cost-forecast` | Get cost forecasting data        | `projectId?`, `months?`                      |
 
 ## 💡 Usage Examples
 
@@ -116,7 +120,7 @@ Add to your workspace `.cursorrules` or editor configuration:
 
 ```
 "Show me BigQuery datasets that haven't been accessed in 30 days"
-"List all Cloud Functions with more than 100 errors in the last week"  
+"List all Cloud Functions with more than 100 errors in the last week"
 "Find storage buckets consuming more than 100GB"
 "Show GKE clusters with outdated Kubernetes versions"
 "Get cost breakdown by service for the last month"
@@ -132,7 +136,7 @@ const { InstancesClient } = require('@google-cloud/compute');
 const instancesClient = new InstancesClient();
 
 const [instances] = await instancesClient.aggregatedList({
-  project: projectId
+  project: projectId,
 });
 
 return Object.entries(instances)
@@ -142,8 +146,8 @@ return Object.entries(instances)
     instances: instanceList.instances.map(i => ({
       name: i.name,
       status: i.status,
-      machineType: i.machineType?.split('/').pop()
-    }))
+      machineType: i.machineType?.split('/').pop(),
+    })),
   }));
 ```
 
@@ -174,7 +178,7 @@ src/
 ### Setup Development Environment
 
 ```bash
-git clone https://github.com/eniayomi/gcp-mcp
+git clone https://github.com/startupmanch/gcp-mcp
 cd gcp-mcp
 npm install
 ```
@@ -193,10 +197,10 @@ npm run format        # Format code with Prettier
 
 ### Project Structure
 
-* **`src/`** - Source code
-* **`dist/`** - Compiled output
-* **`tests/`** - Test files (future)
-* **`docs/`** - Documentation
+- **`src/`** - Source code
+- **`dist/`** - Compiled output
+- **`tests/`** - Test files (future)
+- **`docs/`** - Documentation
 
 ### Environment Variables
 
@@ -217,7 +221,7 @@ Set the `LOG_LEVEL` environment variable:
 ```bash
 export LOG_LEVEL=debug    # Most verbose
 export LOG_LEVEL=info     # Default
-export LOG_LEVEL=warn     # Warnings only  
+export LOG_LEVEL=warn     # Warnings only
 export LOG_LEVEL=error    # Errors only
 ```
 
@@ -234,6 +238,7 @@ export GOOGLE_CLOUD_REGION=europe-west1
 ### Common Issues
 
 **Authentication Errors:**
+
 ```bash
 # Ensure you're logged in
 gcloud auth application-default login
@@ -243,6 +248,7 @@ gcloud auth list
 ```
 
 **Permission Errors:**
+
 ```bash
 # Check project access
 gcloud projects list
@@ -252,6 +258,7 @@ gcloud iam roles describe roles/viewer
 ```
 
 **Connection Issues:**
+
 ```bash
 # Test basic connectivity
 gcloud config list
@@ -287,15 +294,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-* Built on the [Model Context Protocol](https://github.com/modelcontextprotocol/servers) by Anthropic
-* Uses [Google Cloud Client Libraries](https://cloud.google.com/nodejs/docs/reference)
-* Inspired by the need for natural language cloud operations
+- Built on the [Model Context Protocol](https://github.com/modelcontextprotocol/servers) by Anthropic
+- Uses [Google Cloud Client Libraries](https://cloud.google.com/nodejs/docs/reference)
+- Inspired by the need for natural language cloud operations
 
 ## 📞 Support
 
-* **Issues**: [GitHub Issues](https://github.com/eniayomi/gcp-mcp/issues)
-* **Discussions**: [GitHub Discussions](https://github.com/eniayomi/gcp-mcp/discussions)
-* **Email**: [Support Email](mailto:support@yourproject.com)
+- **Issues**: [GitHub Issues](https://github.com/startupmanch/gcp-mcp/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/startupmanch/gcp-mcp/discussions)
+- **Email**: [Support Email](mailto:support@yourproject.com)
 
 ---
 

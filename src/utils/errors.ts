@@ -28,18 +28,16 @@ export async function withRetry<T>(
     } catch (error) {
       lastError = error as Error;
       logger.warn(`Attempt ${attempt}/${maxRetries} failed: ${lastError.message}`);
-      
+
       if (attempt < maxRetries) {
         await new Promise(resolve => setTimeout(resolve, delay * attempt));
       }
     }
   }
 
-  throw new GCPMCPError(
-    `Operation failed after ${maxRetries} attempts`,
-    'MAX_RETRIES_EXCEEDED',
-    { originalError: lastError }
-  );
+  throw new GCPMCPError(`Operation failed after ${maxRetries} attempts`, 'MAX_RETRIES_EXCEEDED', {
+    originalError: lastError,
+  });
 }
 
 export function handleError(error: unknown, operation: string): never {
@@ -49,10 +47,8 @@ export function handleError(error: unknown, operation: string): never {
 
   const errorMessage = error instanceof Error ? error.message : String(error);
   logger.error(`Error in ${operation}:`, error as Error);
-  
-  throw new GCPMCPError(
-    `Failed to ${operation}: ${errorMessage}`,
-    'OPERATION_FAILED',
-    { originalError: error }
-  );
+
+  throw new GCPMCPError(`Failed to ${operation}: ${errorMessage}`, 'OPERATION_FAILED', {
+    originalError: error,
+  });
 }

@@ -17,20 +17,22 @@ We welcome various types of contributions:
 ### Getting Started
 
 1. **Fork the Repository**
+
    ```bash
    # Fork on GitHub, then clone your fork
-   git clone https://github.com/YOUR_USERNAME/gcp-mcp.git
-   cd gcp-mcp
+   git clone https://github.com/startupmanch/gcp-mcp-server.git
+   cd gcp-mcp-server
    ```
 
 2. **Set Up Development Environment**
+
    ```bash
    # Install dependencies
    npm install
-   
+
    # Build the project
    npm run build
-   
+
    # Run in development mode
    npm run dev
    ```
@@ -50,21 +52,23 @@ We welcome various types of contributions:
    - Update documentation if needed
 
 2. **Test Your Changes**
+
    ```bash
    # Run the build
    npm run build
-   
+
    # Run linting
    npm run lint
-   
+
    # Format code
    npm run format
-   
+
    # Test the server
    npm test
    ```
 
 3. **Commit Your Changes**
+
    ```bash
    git add .
    git commit -m "feat: add new tool for listing GKE clusters"
@@ -86,6 +90,7 @@ We welcome various types of contributions:
 - Export types from appropriate modules
 
 Example:
+
 ```typescript
 // Good
 interface GCPResource {
@@ -107,6 +112,7 @@ const resource: any = { ... };
 - Provide meaningful error messages
 
 Example:
+
 ```typescript
 import { withRetry, handleError, logger } from '../utils';
 
@@ -127,6 +133,7 @@ try {
 - Include context in log messages
 
 Example:
+
 ```typescript
 import { logger } from '../utils';
 
@@ -145,15 +152,17 @@ logger.error('Operation failed', error);
 - Aim for >80% code coverage
 
 Example:
+
 ```typescript
 describe('withRetry', () => {
   it('should retry failed operations', async () => {
-    const mockOperation = jest.fn()
+    const mockOperation = jest
+      .fn()
       .mockRejectedValueOnce(new Error('First failure'))
       .mockResolvedValueOnce('Success');
-    
+
     const result = await withRetry(mockOperation, 2);
-    
+
     expect(result).toBe('Success');
     expect(mockOperation).toHaveBeenCalledTimes(2);
   });
@@ -171,6 +180,7 @@ describe('withRetry', () => {
 ### Tool Structure
 
 1. **Define the Tool Schema** (`src/tools/definitions.ts`)
+
    ```typescript
    {
      name: "your-tool-name",
@@ -186,12 +196,13 @@ describe('withRetry', () => {
    ```
 
 2. **Implement the Handler** (`src/tools/handlers.ts`)
+
    ```typescript
    async yourToolName(args: ToolCallArgs): Promise<ToolResponse> {
      try {
        // Implement tool logic
        const result = await this.performOperation(args);
-       
+
        return {
          content: [{
            type: "text",
@@ -229,14 +240,15 @@ describe('withRetry', () => {
 - Provide usage examples
 
 Example:
-```typescript
+
+````typescript
 /**
  * Executes a GCP operation with automatic retry logic
  * @param operation - The async operation to execute
  * @param maxRetries - Maximum number of retry attempts (default: 3)
  * @returns Promise resolving to the operation result
  * @throws GCPMCPError when all retries are exhausted
- * 
+ *
  * @example
  * ```typescript
  * const result = await withRetry(async () => {
@@ -244,8 +256,8 @@ Example:
  * });
  * ```
  */
-async function withRetry<T>(operation: () => Promise<T>, maxRetries = 3): Promise<T>
-```
+async function withRetry<T>(operation: () => Promise<T>, maxRetries = 3): Promise<T>;
+````
 
 ### README Updates
 
