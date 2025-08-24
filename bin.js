@@ -1,4 +1,3 @@
 #!/usr/bin/env node
 
-require('tsx/cjs');
-require('./src/index.ts'); 
+require('./dist/index.js'); 
