@@ -21,7 +21,7 @@ export interface GCPCredentials {
 
 export interface ServerState {
   selectedProject: string | null;
-  selectedProjectCredentials: any;
+  selectedProjectCredentials: GCPCredentials | null;
   selectedRegion: string;
 }
 
@@ -56,7 +56,7 @@ export interface GCPResource {
 
 export interface ExecutionResult {
   success: boolean;
-  data?: any;
+  data?: unknown;
   error?: string;
   executionTime?: number;
 }

@@ -2,7 +2,7 @@
  * Server state management for GCP MCP Server
  */
 
-import { ServerState } from '../types';
+import { ServerState, GCPCredentials } from '../types';
 import { CONFIG } from '../config';
 import { logger } from '../utils';
 
@@ -25,14 +25,14 @@ class StateManager {
     return this.state.selectedRegion;
   }
 
-  getSelectedCredentials(): any {
+  getSelectedCredentials(): GCPCredentials | null {
     return this.state.selectedProjectCredentials;
   }
 
-  selectProject(projectId: string, credentials?: any): void {
+  selectProject(projectId: string, credentials?: GCPCredentials | null): void {
     logger.info(`Selecting project: ${projectId}`);
     this.state.selectedProject = projectId;
-    this.state.selectedProjectCredentials = credentials;
+    this.state.selectedProjectCredentials = credentials || null;
   }
 
   setRegion(region: string): void {

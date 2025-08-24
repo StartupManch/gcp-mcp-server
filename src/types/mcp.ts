@@ -7,7 +7,7 @@ export interface MCPTool {
   description: string;
   inputSchema: {
     type: 'object';
-    properties: Record<string, any>;
+    properties: Record<string, unknown>;
     required: string[];
   };
 }
@@ -18,7 +18,7 @@ export interface ToolCallArgs {
   projectId?: string;
   region?: string;
   months?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ToolResponse {

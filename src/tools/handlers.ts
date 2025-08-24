@@ -93,9 +93,9 @@ export class GCPToolHandlers {
         return projects.map(project => ({
           projectId: project.projectId || '',
           name: project.name || '',
-          projectNumber: (project as any).projectNumber || '',
-          lifecycleState: (project as any).lifecycleState || '',
-          parent: (project as any).parent,
+          projectNumber: (project as { projectNumber?: string }).projectNumber || '',
+          lifecycleState: (project as { lifecycleState?: string }).lifecycleState || '',
+          parent: (project as { parent?: { type: string; id: string } }).parent,
         }));
       });
 
@@ -266,6 +266,7 @@ export class GCPToolHandlers {
     try {
       const { projectId, zone } = args;
       const currentProjectId = projectId || stateManager.getSelectedProject();
+      const zoneString = zone as string | undefined;
 
       if (!currentProjectId) {
         throw new Error('No project selected. Please select a project first.');
@@ -275,21 +276,21 @@ export class GCPToolHandlers {
 
       const result = await withRetry(async () => {
         const auth = new GoogleAuth({
-          scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+          scopes: ['https://www.googleapis.com/auth/compute.readonly'],
         });
         const computeClient = new InstancesClient({ auth });
 
-        if (zone) {
+        if (zoneString) {
           // List instances from specific zone
           const [instances] = await computeClient.list({
             project: currentProjectId,
-            zone,
+            zone: zoneString,
           });
           return instances || [];
         } else {
           // For all zones, we'll use a simpler approach
           // In a real implementation, you'd get zone list first then iterate
-          const allInstances: any[] = [];
+          const allInstances: unknown[] = [];
           try {
             const zonesToCheck = [
               'us-central1-a',
@@ -313,13 +314,13 @@ export class GCPToolHandlers {
                     }))
                   );
                 }
-              } catch (error) {
+              } catch {
                 // Zone might not exist or no instances, continue
                 continue;
               }
             }
             return allInstances;
-          } catch (error) {
+          } catch {
             // Fallback to empty array
             return [];
           }
@@ -349,12 +350,14 @@ export class GCPToolHandlers {
     try {
       const { instanceName, zone, projectId } = args;
       const currentProjectId = projectId || stateManager.getSelectedProject();
+      const instanceNameString = instanceName as string;
+      const zoneString = zone as string;
 
-      if (!currentProjectId || !instanceName || !zone) {
+      if (!currentProjectId || !instanceNameString || !zoneString) {
         throw new Error('Missing required parameters: instanceName, zone');
       }
 
-      logger.info(`Getting instance details: ${instanceName} in zone ${zone}`);
+      logger.info(`Getting instance details: ${instanceNameString} in zone ${zoneString}`);
 
       const result = await withRetry(async () => {
         const auth = new GoogleAuth({
@@ -364,8 +367,8 @@ export class GCPToolHandlers {
 
         const [instance] = await computeClient.get({
           project: currentProjectId,
-          zone,
-          instance: instanceName,
+          zone: zoneString,
+          instance: instanceNameString,
         });
 
         return instance;
@@ -392,12 +395,14 @@ export class GCPToolHandlers {
     try {
       const { instanceName, zone, projectId } = args;
       const currentProjectId = projectId || stateManager.getSelectedProject();
+      const instanceNameString = instanceName as string;
+      const zoneString = zone as string;
 
-      if (!currentProjectId || !instanceName || !zone) {
+      if (!currentProjectId || !instanceNameString || !zoneString) {
         throw new Error('Missing required parameters: instanceName, zone');
       }
 
-      logger.info(`Starting instance: ${instanceName} in zone ${zone}`);
+      logger.info(`Starting instance: ${instanceNameString} in zone ${zoneString}`);
 
       const result = await withRetry(async () => {
         const auth = new GoogleAuth({
@@ -407,8 +412,8 @@ export class GCPToolHandlers {
 
         const [operation] = await computeClient.start({
           project: currentProjectId,
-          zone,
-          instance: instanceName,
+          zone: zoneString,
+          instance: instanceNameString,
         });
 
         return operation;
@@ -437,12 +442,14 @@ export class GCPToolHandlers {
     try {
       const { instanceName, zone, projectId } = args;
       const currentProjectId = projectId || stateManager.getSelectedProject();
+      const instanceNameString = instanceName as string;
+      const zoneString = zone as string;
 
-      if (!currentProjectId || !instanceName || !zone) {
+      if (!currentProjectId || !instanceNameString || !zoneString) {
         throw new Error('Missing required parameters: instanceName, zone');
       }
 
-      logger.info(`Stopping instance: ${instanceName} in zone ${zone}`);
+      logger.info(`Stopping instance: ${instanceNameString} in zone ${zoneString}`);
 
       const result = await withRetry(async () => {
         const auth = new GoogleAuth({
@@ -452,8 +459,8 @@ export class GCPToolHandlers {
 
         const [operation] = await computeClient.stop({
           project: currentProjectId,
-          zone,
-          instance: instanceName,
+          zone: zoneString,
+          instance: instanceNameString,
         });
 
         return operation;
@@ -523,19 +530,21 @@ export class GCPToolHandlers {
   async listStorageObjects(args: ToolCallArgs): Promise<ToolResponse> {
     try {
       const { bucketName, prefix, maxResults = 100 } = args;
+      const bucketNameString = bucketName as string;
+      const prefixString = prefix as string | undefined;
 
-      if (!bucketName) {
+      if (!bucketNameString) {
         throw new Error('Missing required parameter: bucketName');
       }
 
-      logger.info(`Listing objects in bucket: ${bucketName}`);
+      logger.info(`Listing objects in bucket: ${bucketNameString}`);
 
       const result = await withRetry(async () => {
         const storage = new Storage();
-        const bucket = storage.bucket(bucketName);
+        const bucket = storage.bucket(bucketNameString);
 
         const [files] = await bucket.getFiles({
-          prefix,
+          prefix: prefixString,
           maxResults: Number(maxResults),
         });
 
@@ -570,16 +579,18 @@ export class GCPToolHandlers {
   async getStorageObjectInfo(args: ToolCallArgs): Promise<ToolResponse> {
     try {
       const { bucketName, objectName } = args;
+      const bucketNameString = bucketName as string;
+      const objectNameString = objectName as string;
 
-      if (!bucketName || !objectName) {
+      if (!bucketNameString || !objectNameString) {
         throw new Error('Missing required parameters: bucketName, objectName');
       }
 
-      logger.info(`Getting object info: ${objectName} in bucket ${bucketName}`);
+      logger.info(`Getting object info: ${objectNameString} in bucket ${bucketNameString}`);
 
       const result = await withRetry(async () => {
         const storage = new Storage();
-        const file = storage.bucket(bucketName).file(objectName);
+        const file = storage.bucket(bucketNameString).file(objectNameString);
 
         const [metadata] = await file.getMetadata();
         return metadata;
@@ -648,16 +659,17 @@ export class GCPToolHandlers {
     try {
       const { datasetId, projectId } = args;
       const currentProjectId = projectId || stateManager.getSelectedProject();
+      const datasetIdString = datasetId as string;
 
-      if (!currentProjectId || !datasetId) {
+      if (!currentProjectId || !datasetIdString) {
         throw new Error('Missing required parameter: datasetId');
       }
 
-      logger.info(`Listing tables in dataset: ${datasetId}`);
+      logger.info(`Listing tables in dataset: ${datasetIdString}`);
 
       const result = await withRetry(async () => {
         const bigquery = new BigQuery({ projectId: currentProjectId });
-        const dataset = bigquery.dataset(datasetId);
+        const dataset = bigquery.dataset(datasetIdString);
         const [tables] = await dataset.getTables();
 
         return tables.map(table => ({
@@ -786,12 +798,13 @@ export class GCPToolHandlers {
     try {
       const { instanceId, projectId } = args;
       const currentProjectId = projectId || stateManager.getSelectedProject();
+      const instanceIdString = instanceId as string;
 
-      if (!currentProjectId || !instanceId) {
+      if (!currentProjectId || !instanceIdString) {
         throw new Error('Missing required parameter: instanceId');
       }
 
-      logger.info(`Getting SQL instance details: ${instanceId}`);
+      logger.info(`Getting SQL instance details: ${instanceIdString}`);
 
       const result = await withRetry(async () => {
         const auth = new GoogleAuth({
@@ -801,7 +814,7 @@ export class GCPToolHandlers {
 
         const [instance] = await sqlClient.get({
           project: currentProjectId,
-          instance: instanceId,
+          instance: instanceIdString,
         });
 
         return instance;
@@ -1190,7 +1203,11 @@ export class GCPToolHandlers {
   /**
    * Run TypeScript code in a sandboxed VM context
    */
-  private async runCodeInSandbox(code: string, projectId: string, region: string): Promise<any> {
+  private async runCodeInSandbox(
+    code: string,
+    projectId: string,
+    region: string
+  ): Promise<unknown> {
     const project = new Project({
       useInMemoryFileSystem: true,
       compilerOptions: {
@@ -1231,7 +1248,7 @@ export class GCPToolHandlers {
 
     const sandbox = {
       require: (moduleName: string) => {
-        const moduleMap: Record<string, any> = {
+        const moduleMap: Record<string, unknown> = {
           '@google-cloud/compute': { InstancesClient },
           '@google-cloud/storage': { Storage },
           '@google-cloud/functions': { CloudFunctionsServiceClient },

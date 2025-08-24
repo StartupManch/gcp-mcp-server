@@ -16,25 +16,25 @@ class Logger {
     this.logLevel = level;
   }
 
-  debug(message: string, ...args: any[]): void {
+  debug(message: string, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.DEBUG) {
       console.debug(`[DEBUG] ${new Date().toISOString()} - ${message}`, ...args);
     }
   }
 
-  info(message: string, ...args: any[]): void {
+  info(message: string, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.INFO) {
       console.log(`[INFO] ${new Date().toISOString()} - ${message}`, ...args);
     }
   }
 
-  warn(message: string, ...args: any[]): void {
+  warn(message: string, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.WARN) {
       console.warn(`[WARN] ${new Date().toISOString()} - ${message}`, ...args);
     }
   }
 
-  error(message: string, error?: Error, ...args: any[]): void {
+  error(message: string, error?: Error, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.ERROR) {
       console.error(`[ERROR] ${new Date().toISOString()} - ${message}`, error, ...args);
     }
