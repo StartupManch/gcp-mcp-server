@@ -29,12 +29,8 @@
                 "addReleases": "bottom",
                 "assets": [
                     {
-                        "path": "dist-npm/*.tgz",
+                        "path": "dist/*.tgz",
                         "label": "NPM Package"
-                    },
-                    {
-                        "path": "dist/**",
-                        "label": "Distribution Files"
                     },
                     {
                         "path": "README.md",
