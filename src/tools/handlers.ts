@@ -19,7 +19,7 @@ import { SqlInstancesServiceClient } from '@google-cloud/sql';
 
 import { ToolCallArgs, ToolResponse, createTextResponse } from '../types';
 import { logger, withRetry, stateManager } from '../utils';
-import { CONFIG } from '../config';
+import { CONFIG, getZonesForRegion } from '../config';
 
 export class GCPToolHandlers {
   /**
@@ -95,7 +95,7 @@ export class GCPToolHandlers {
           name: project.name || '',
           projectNumber: (project as { projectNumber?: string }).projectNumber || '',
           lifecycleState: (project as { lifecycleState?: string }).lifecycleState || '',
-          parent: (project as { parent?: { type: string; id: string } }).parent,
+          parent: (project as unknown as { parent?: { type: string; id: string } }).parent,
         }));
       });
 
@@ -288,17 +288,12 @@ export class GCPToolHandlers {
           });
           return instances || [];
         } else {
-          // For all zones, we'll use a simpler approach
-          // In a real implementation, you'd get zone list first then iterate
+          // For all zones, get zones dynamically based on the current region selection
+          // This replaces the hardcoded zone list and makes the tool region-aware
           const allInstances: unknown[] = [];
           try {
-            const zonesToCheck = [
-              'us-central1-a',
-              'us-central1-b',
-              'us-central1-c',
-              'us-west1-a',
-              'us-east1-a',
-            ];
+            const currentRegion = stateManager.getSelectedRegion();
+            const zonesToCheck = getZonesForRegion(currentRegion);
 
             for (const zoneToCheck of zonesToCheck) {
               try {
