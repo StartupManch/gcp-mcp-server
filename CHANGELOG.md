@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2](https://github.com/StartupManch/gcp-mcp-server/compare/v1.1.1...v1.1.2) (2025-08-24)
+
+
+### Bug Fixes
+
+* update bin.js to require the compiled index from dist instead of source ([be11793](https://github.com/StartupManch/gcp-mcp-server/commit/be11793d35cd6427e0785a7515f7baabb56da3e8))
+
 ## [1.1.1](https://github.com/StartupManch/gcp-mcp-server/compare/v1.1.0...v1.1.1) (2025-08-24)
 
 
