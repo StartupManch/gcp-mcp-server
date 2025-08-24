@@ -1,0 +1,17 @@
+# <type>(<scope>): <description>
+#
+# <body>
+#
+# <footer>
+#
+# Types: feat, fix, docs, style, refactor, perf, test, chore, ci, revert
+# Scopes: auth, api, gcp, tools, config, docker, ci, docs, types, utils
+#
+# Examples:
+# feat(auth): add OAuth2 support
+# fix(api): resolve timeout in GCP calls
+# docs: update installation guide
+# chore(deps): update dependencies
+#
+# Breaking changes: Add "!" after type or include "BREAKING CHANGE:" in footer
+# Issue references: "Closes #123" or "Fixes #456" in footer
