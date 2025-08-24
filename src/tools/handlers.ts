@@ -95,7 +95,7 @@ export class GCPToolHandlers {
           name: project.name || '',
           projectNumber: (project as { projectNumber?: string }).projectNumber || '',
           lifecycleState: (project as { lifecycleState?: string }).lifecycleState || '',
-          parent: (project as { parent?: { type: string; id: string } }).parent,
+          parent: (project as unknown as { parent?: { type: string; id: string } }).parent,
         }));
       });
 

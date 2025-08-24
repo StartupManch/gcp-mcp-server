@@ -5,22 +5,22 @@
 
 describe('GCP MCP Server', () => {
   describe('Server Module', () => {
-    it('should export MCPServer class', () => {
+    it('should export GCPMCPServer class', () => {
       const serverModule = require('../src/server');
-      expect(serverModule.MCPServer).toBeDefined();
-      expect(typeof serverModule.MCPServer).toBe('function');
+      expect(serverModule.GCPMCPServer).toBeDefined();
+      expect(typeof serverModule.GCPMCPServer).toBe('function');
     });
 
     it('should create server instance', () => {
-      const { MCPServer } = require('../src/server');
-      const server = new MCPServer();
+      const { GCPMCPServer } = require('../src/server');
+      const server = new GCPMCPServer();
       expect(server).toBeDefined();
-      expect(server.constructor.name).toBe('MCPServer');
+      expect(server.constructor.name).toBe('GCPMCPServer');
     });
 
     it('should have required server methods', () => {
-      const { MCPServer } = require('../src/server');
-      const server = new MCPServer();
+      const { GCPMCPServer } = require('../src/server');
+      const server = new GCPMCPServer();
 
       expect(typeof server.connect).toBe('function');
       expect(typeof server.disconnect).toBe('function');
@@ -30,16 +30,16 @@ describe('GCP MCP Server', () => {
 
   describe('Server Configuration', () => {
     it('should initialize with default configuration', () => {
-      const { MCPServer } = require('../src/server');
-      const server = new MCPServer();
+      const { GCPMCPServer } = require('../src/server');
+      const server = new GCPMCPServer();
 
       // Server should be created without errors
       expect(server).toBeDefined();
     });
 
     it('should have MCP protocol handlers', () => {
-      const { MCPServer } = require('../src/server');
-      const server = new MCPServer();
+      const { GCPMCPServer } = require('../src/server');
+      const server = new GCPMCPServer();
 
       // Check that server has the expected structure
       expect(server).toHaveProperty('connect');
@@ -49,11 +49,11 @@ describe('GCP MCP Server', () => {
 
   describe('Error Handling', () => {
     it('should handle invalid requests gracefully', () => {
-      const { MCPServer } = require('../src/server');
-      const server = new MCPServer();
+      const { GCPMCPServer } = require('../src/server');
+      const server = new GCPMCPServer();
 
       // Should not throw when creating server
-      expect(() => new MCPServer()).not.toThrow();
+      expect(() => new GCPMCPServer()).not.toThrow();
     });
   });
 });
