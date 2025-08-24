@@ -7,6 +7,14 @@ import { projectTools } from './project/definitions';
 import { billingTools } from './billing/definitions';
 import { iamTools } from './iam/definitions';
 import { computeTools } from './compute/definitions';
+import { storageTools } from './storage/definitions';
+import { bigqueryTools } from './bigquery/definitions';
+import { sqlTools } from './sql/definitions';
+import { functionsTools } from './functions/definitions';
+import { runTools } from './run/definitions';
+import { gkeTools } from './gke/definitions';
+import { loggingTools } from './logging/definitions';
+import { policyTools } from './policy/definitions';
 
 // Import all handlers
 import { ProjectHandlers } from './project/handlers';
@@ -17,7 +25,20 @@ import { ToolResponse } from '../types';
 import { ToolCallArgs, MCPTool } from '../types/mcp';
 
 // Combine all tool definitions
-export const gcpTools: MCPTool[] = [...projectTools, ...billingTools, ...iamTools, ...computeTools];
+export const gcpTools: MCPTool[] = [
+  ...projectTools,
+  ...billingTools,
+  ...iamTools,
+  ...computeTools,
+  ...storageTools,
+  ...bigqueryTools,
+  ...sqlTools,
+  ...functionsTools,
+  ...runTools,
+  ...gkeTools,
+  ...loggingTools,
+  ...policyTools,
+];
 
 // Create handler instances
 const projectHandlers = new ProjectHandlers();
