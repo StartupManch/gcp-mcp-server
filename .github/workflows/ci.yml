@@ -175,6 +175,9 @@ jobs:
         with:
           name: build-artifacts
 
+      - name: Create dist-npm directory
+        run: mkdir -p dist-npm
+
       - name: Semantic Release
         run: npx semantic-release
         env:

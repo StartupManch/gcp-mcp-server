@@ -68,6 +68,7 @@
     "@types/supertest": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
     "eslint": "^9.34.0",
     "jest": "^30.0.5",
     "jest-environment-node": "^30.0.5",
