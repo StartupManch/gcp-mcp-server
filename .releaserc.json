@@ -5,12 +5,68 @@
     "repositoryUrl": "https://github.com/StartupManch/gcp-mcp-server",
     "plugins": [
         "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        "@semantic-release/changelog",
+        [
+            "@semantic-release/release-notes-generator",
+            {
+                "preset": "conventionalcommits",
+                "presetConfig": {
+                    "types": [
+                        {
+                            "type": "feat",
+                            "section": "✨ Features"
+                        },
+                        {
+                            "type": "fix",
+                            "section": "🐛 Bug Fixes"
+                        },
+                        {
+                            "type": "docs",
+                            "section": "📚 Documentation"
+                        },
+                        {
+                            "type": "style",
+                            "section": "💄 Styling"
+                        },
+                        {
+                            "type": "refactor",
+                            "section": "♻️ Code Refactoring"
+                        },
+                        {
+                            "type": "perf",
+                            "section": "⚡ Performance Improvements"
+                        },
+                        {
+                            "type": "test",
+                            "section": "✅ Tests"
+                        },
+                        {
+                            "type": "build",
+                            "section": "🔧 Build System"
+                        },
+                        {
+                            "type": "ci",
+                            "section": "👷 CI/CD"
+                        },
+                        {
+                            "type": "chore",
+                            "section": "🧹 Chores"
+                        }
+                    ]
+                }
+            }
+        ],
+        [
+            "@semantic-release/changelog",
+            {
+                "changelogFile": "CHANGELOG.md",
+                "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)."
+            }
+        ],
         [
             "@semantic-release/npm",
             {
-                "npmPublish": false
+                "npmPublish": true,
+                "tarballDir": "dist-npm"
             }
         ],
         [
@@ -18,7 +74,22 @@
             {
                 "successComment": false,
                 "failComment": false,
-                "releasedLabels": false
+                "releasedLabels": false,
+                "addReleases": "bottom",
+                "assets": [
+                    {
+                        "path": "dist-npm/*.tgz",
+                        "label": "NPM Package"
+                    },
+                    {
+                        "path": "dist/**",
+                        "label": "Distribution Files"
+                    },
+                    {
+                        "path": "README.md",
+                        "label": "Documentation"
+                    }
+                ]
             }
         ],
         [

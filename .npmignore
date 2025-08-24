@@ -1,0 +1,58 @@
+# Source files
+src/
+tsconfig.json
+jest.config.js
+eslint.config.js
+
+# Development files
+.vscode/
+.github/
+.git/
+.gitignore
+.env*
+
+# Test files
+**/*.test.ts
+**/*.spec.ts
+__tests__/
+coverage/
+
+# Development dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Documentation (keep only essential)
+docs/
+*.md
+!README.md
+
+# Build artifacts (keep only dist)
+.build/
+.tmp/
+
+# IDE files
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Azure Storage Emulator
+__azurite_db_*__.json
+AzuriteConfig
+
+# Test artifacts
+test-*.mjs
+test-*.js

@@ -6,6 +6,12 @@
   "bin": {
     "gcp-mcp-server": "./bin.js"
   },
+  "files": [
+    "dist/",
+    "bin.js",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",

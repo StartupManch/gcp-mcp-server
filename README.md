@@ -6,8 +6,6 @@
 
 A Model Context Protocol (MCP) server that enables **any MCP-compatible AI assistant** to interact with your Google Cloud Platform environment. This allows for natural language querying and management of your GCP resources during conversations with AI assistants like Claude, Cursor, Windsurf, and any other MCP-compatible applications.
 
-![GCP MCP Demo](images/claude.png)
-
 ## ✨ Features
 
 - 🔍 **Natural Language Interface**: Query and modify GCP resources using plain English
@@ -58,6 +56,37 @@ npm install -g gcp-mcp-server
 #### Cursor/Windsurf
 
 Add to your workspace configuration:
+
+```json
+{
+  "mcpServers": {
+    "gcp": {
+      "command": "sh",
+      "args": ["-c", "npx -y gcp-mcp-server"]
+    }
+  }
+}
+```
+
+#### VS Code
+
+For VS Code with MCP extensions:
+
+1. Install an MCP-compatible extension (like Continue, Cursor, or Claude Dev)
+2. Add to your VS Code settings (`settings.json`):
+
+```json
+{
+  "mcp.servers": {
+    "gcp": {
+      "command": "sh",
+      "args": ["-c", "npx -y gcp-mcp-server"]
+    }
+  }
+}
+```
+
+Or if using the Continue extension, add to `~/.continue/config.json`:
 
 ```json
 {
