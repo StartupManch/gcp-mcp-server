@@ -1195,6 +1195,740 @@ export class GCPToolHandlers {
     }
   }
 
+  // IAM Management Handlers
+  async listIamPolicies(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId } = args;
+
+      if (!resourceType) {
+        throw new Error('Missing required parameter: resourceType');
+      }
+
+      logger.info(`Listing IAM policies for ${resourceType}: ${resourceId || 'all'}`);
+
+      // TODO: Implement IAM policies listing using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'IAM policies listing not yet implemented',
+            resourceType,
+            resourceId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('list IAM policies', error);
+    }
+  }
+
+  async getIamPolicy(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId } = args;
+
+      if (!resourceType || !resourceId) {
+        throw new Error('Missing required parameters: resourceType and resourceId');
+      }
+
+      logger.info(`Getting IAM policy for ${resourceType}: ${resourceId}`);
+
+      // TODO: Implement IAM policy retrieval using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'IAM policy retrieval not yet implemented',
+            resourceType,
+            resourceId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('get IAM policy', error);
+    }
+  }
+
+  async setIamPolicy(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId, policy } = args;
+
+      if (!resourceType || !resourceId || !policy) {
+        throw new Error('Missing required parameters: resourceType, resourceId, and policy');
+      }
+
+      logger.info(`Setting IAM policy for ${resourceType}: ${resourceId}`);
+
+      // TODO: Implement IAM policy setting using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'IAM policy setting not yet implemented',
+            resourceType,
+            resourceId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('set IAM policy', error);
+    }
+  }
+
+  async addIamBinding(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId, role, member } = args;
+
+      if (!resourceType || !resourceId || !role || !member) {
+        throw new Error('Missing required parameters: resourceType, resourceId, role, and member');
+      }
+
+      logger.info(`Adding IAM binding: ${member} to ${role} for ${resourceType}: ${resourceId}`);
+
+      // TODO: Implement IAM binding addition using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'IAM binding addition not yet implemented',
+            resourceType,
+            resourceId,
+            role,
+            member,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('add IAM binding', error);
+    }
+  }
+
+  async removeIamBinding(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId, role, member } = args;
+
+      if (!resourceType || !resourceId || !role || !member) {
+        throw new Error('Missing required parameters: resourceType, resourceId, role, and member');
+      }
+
+      logger.info(
+        `Removing IAM binding: ${member} from ${role} for ${resourceType}: ${resourceId}`
+      );
+
+      // TODO: Implement IAM binding removal using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'IAM binding removal not yet implemented',
+            resourceType,
+            resourceId,
+            role,
+            member,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('remove IAM binding', error);
+    }
+  }
+
+  async listServiceAccounts(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      if (!currentProjectId) {
+        throw new Error('No project selected. Please select a project first.');
+      }
+
+      logger.info(`Listing service accounts for project: ${currentProjectId}`);
+
+      // TODO: Implement service accounts listing using IAM client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Service accounts listing not yet implemented',
+            projectId: currentProjectId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('list service accounts', error);
+    }
+  }
+
+  async createServiceAccount(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId, accountId, displayName, description } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      if (!currentProjectId || !accountId) {
+        throw new Error('Missing required parameters: accountId');
+      }
+
+      logger.info(`Creating service account: ${accountId} in project: ${currentProjectId}`);
+
+      // TODO: Implement service account creation using IAM client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Service account creation not yet implemented',
+            projectId: currentProjectId,
+            accountId,
+            displayName,
+            description,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('create service account', error);
+    }
+  }
+
+  async deleteServiceAccount(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId, email } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      if (!currentProjectId || !email) {
+        throw new Error('Missing required parameters: email');
+      }
+
+      logger.info(`Deleting service account: ${email} from project: ${currentProjectId}`);
+
+      // TODO: Implement service account deletion using IAM client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Service account deletion not yet implemented',
+            projectId: currentProjectId,
+            email,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('delete service account', error);
+    }
+  }
+
+  async listCustomRoles(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { parent } = args;
+
+      if (!parent) {
+        throw new Error('Missing required parameter: parent');
+      }
+
+      logger.info(`Listing custom roles for parent: ${parent}`);
+
+      // TODO: Implement custom roles listing using IAM client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Custom roles listing not yet implemented',
+            parent,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('list custom roles', error);
+    }
+  }
+
+  async createCustomRole(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { parent, roleId, title, description, permissions, stage = 'GA' } = args;
+
+      if (!parent || !roleId || !title || !permissions) {
+        throw new Error('Missing required parameters: parent, roleId, title, and permissions');
+      }
+
+      logger.info(`Creating custom role: ${roleId} for parent: ${parent}`);
+
+      // TODO: Implement custom role creation using IAM client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Custom role creation not yet implemented',
+            parent,
+            roleId,
+            title,
+            description,
+            permissions,
+            stage,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('create custom role', error);
+    }
+  }
+
+  // FinOps & Cost Management Handlers
+  async getBillingAccount(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { billingAccountId } = args;
+
+      logger.info(
+        billingAccountId
+          ? `Getting billing account: ${billingAccountId}`
+          : 'Listing all billing accounts'
+      );
+
+      // TODO: Implement billing account retrieval using Cloud Billing client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Billing account retrieval not yet implemented',
+            billingAccountId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('get billing account', error);
+    }
+  }
+
+  async listBillingAccounts(_args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      logger.info('Listing all accessible billing accounts');
+
+      // TODO: Implement billing accounts listing using Cloud Billing client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Billing accounts listing not yet implemented',
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('list billing accounts', error);
+    }
+  }
+
+  async setProjectBilling(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId, billingAccountId } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      if (!currentProjectId || !billingAccountId) {
+        throw new Error('Missing required parameters: billingAccountId');
+      }
+
+      logger.info(`Setting billing account: ${billingAccountId} for project: ${currentProjectId}`);
+
+      // TODO: Implement project billing setting using Cloud Billing client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Project billing setting not yet implemented',
+            projectId: currentProjectId,
+            billingAccountId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('set project billing', error);
+    }
+  }
+
+  async getCostBreakdown(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId, billingAccountId, startDate, endDate, groupBy } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      logger.info(
+        `Getting cost breakdown for project: ${currentProjectId || 'N/A'}, billing account: ${billingAccountId || 'N/A'}`
+      );
+
+      // TODO: Implement cost breakdown using Cloud Billing client and BigQuery
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Cost breakdown retrieval not yet implemented',
+            projectId: currentProjectId,
+            billingAccountId,
+            startDate,
+            endDate,
+            groupBy,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('get cost breakdown', error);
+    }
+  }
+
+  async createBudget(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { billingAccountId, displayName, amount, projectIds, thresholdRules } = args;
+
+      if (!billingAccountId || !displayName || !amount) {
+        throw new Error('Missing required parameters: billingAccountId, displayName, and amount');
+      }
+
+      logger.info(`Creating budget: ${displayName} for billing account: ${billingAccountId}`);
+
+      // TODO: Implement budget creation using Cloud Billing Budgets client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Budget creation not yet implemented',
+            billingAccountId,
+            displayName,
+            amount,
+            projectIds,
+            thresholdRules,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('create budget', error);
+    }
+  }
+
+  async listBudgets(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { billingAccountId } = args;
+
+      if (!billingAccountId) {
+        throw new Error('Missing required parameter: billingAccountId');
+      }
+
+      logger.info(`Listing budgets for billing account: ${billingAccountId}`);
+
+      // TODO: Implement budgets listing using Cloud Billing Budgets client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Budgets listing not yet implemented',
+            billingAccountId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('list budgets', error);
+    }
+  }
+
+  async updateBudget(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { budgetId, displayName, amount, thresholdRules } = args;
+
+      if (!budgetId) {
+        throw new Error('Missing required parameter: budgetId');
+      }
+
+      logger.info(`Updating budget: ${budgetId}`);
+
+      // TODO: Implement budget update using Cloud Billing Budgets client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Budget update not yet implemented',
+            budgetId,
+            displayName,
+            amount,
+            thresholdRules,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('update budget', error);
+    }
+  }
+
+  async deleteBudget(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { budgetId } = args;
+
+      if (!budgetId) {
+        throw new Error('Missing required parameter: budgetId');
+      }
+
+      logger.info(`Deleting budget: ${budgetId}`);
+
+      // TODO: Implement budget deletion using Cloud Billing Budgets client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Budget deletion not yet implemented',
+            budgetId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('delete budget', error);
+    }
+  }
+
+  async getCostAnomalies(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId, billingAccountId, lookbackDays = 30, anomalyThreshold = 2.0 } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      logger.info(
+        `Detecting cost anomalies for project: ${currentProjectId || 'N/A'}, billing account: ${billingAccountId || 'N/A'}`
+      );
+
+      // TODO: Implement cost anomaly detection using BigQuery and statistical analysis
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Cost anomaly detection not yet implemented',
+            projectId: currentProjectId,
+            billingAccountId,
+            lookbackDays,
+            anomalyThreshold,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('get cost anomalies', error);
+    }
+  }
+
+  async getRightsizingRecommendations(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { projectId, resourceType = 'all', region } = args;
+      const currentProjectId = projectId || stateManager.getSelectedProject();
+
+      if (!currentProjectId) {
+        throw new Error('No project selected. Please select a project first.');
+      }
+
+      logger.info(
+        `Getting rightsizing recommendations for project: ${currentProjectId}, resource type: ${resourceType}`
+      );
+
+      // TODO: Implement rightsizing recommendations using Recommender API
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Rightsizing recommendations not yet implemented',
+            projectId: currentProjectId,
+            resourceType,
+            region,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('get rightsizing recommendations', error);
+    }
+  }
+
+  async exportBillingData(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { billingAccountId, destination, startDate, endDate } = args;
+
+      if (!billingAccountId || !destination) {
+        throw new Error('Missing required parameters: billingAccountId and destination');
+      }
+
+      logger.info(
+        `Exporting billing data for billing account: ${billingAccountId} to ${(destination as { type: string }).type}`
+      );
+
+      // TODO: Implement billing data export using Cloud Billing and BigQuery/Cloud Storage
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Billing data export not yet implemented',
+            billingAccountId,
+            destination,
+            startDate,
+            endDate,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('export billing data', error);
+    }
+  }
+
+  // Organization Policy Management Handlers
+  async listOrganizationPolicies(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId } = args;
+
+      if (!resourceType || !resourceId) {
+        throw new Error('Missing required parameters: resourceType and resourceId');
+      }
+
+      logger.info(`Listing organization policies for ${resourceType}: ${resourceId}`);
+
+      // TODO: Implement organization policies listing using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Organization policies listing not yet implemented',
+            resourceType,
+            resourceId,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('list organization policies', error);
+    }
+  }
+
+  async getOrganizationPolicy(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId, constraint } = args;
+
+      if (!resourceType || !resourceId || !constraint) {
+        throw new Error('Missing required parameters: resourceType, resourceId, and constraint');
+      }
+
+      logger.info(
+        `Getting organization policy for ${resourceType}: ${resourceId}, constraint: ${constraint}`
+      );
+
+      // TODO: Implement organization policy retrieval using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Organization policy retrieval not yet implemented',
+            resourceType,
+            resourceId,
+            constraint,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('get organization policy', error);
+    }
+  }
+
+  async setOrganizationPolicy(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId, constraint, policy } = args;
+
+      if (!resourceType || !resourceId || !constraint || !policy) {
+        throw new Error(
+          'Missing required parameters: resourceType, resourceId, constraint, and policy'
+        );
+      }
+
+      logger.info(
+        `Setting organization policy for ${resourceType}: ${resourceId}, constraint: ${constraint}`
+      );
+
+      // TODO: Implement organization policy setting using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Organization policy setting not yet implemented',
+            resourceType,
+            resourceId,
+            constraint,
+            policy,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('set organization policy', error);
+    }
+  }
+
+  async deleteOrganizationPolicy(args: ToolCallArgs): Promise<ToolResponse> {
+    try {
+      const { resourceType, resourceId, constraint } = args;
+
+      if (!resourceType || !resourceId || !constraint) {
+        throw new Error('Missing required parameters: resourceType, resourceId, and constraint');
+      }
+
+      logger.info(
+        `Deleting organization policy for ${resourceType}: ${resourceId}, constraint: ${constraint}`
+      );
+
+      // TODO: Implement organization policy deletion using Resource Manager client
+      return createTextResponse(
+        JSON.stringify(
+          {
+            success: true,
+            message: 'Organization policy deletion not yet implemented',
+            resourceType,
+            resourceId,
+            constraint,
+          },
+          null,
+          2
+        )
+      );
+    } catch (error) {
+      return this.handleToolError('delete organization policy', error);
+    }
+  }
+
   /**
    * Run TypeScript code in a sandboxed VM context
    */
