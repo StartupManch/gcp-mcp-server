@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4](https://github.com/StartupManch/gcp-mcp-server/compare/v1.1.3...v1.1.4) (2025-08-24)
+
+
+### Bug Fixes
+
+* revert hardcoded node path in bin.js and add claude wrapper ([5c87a0d](https://github.com/StartupManch/gcp-mcp-server/commit/5c87a0d68554df7373701ec89720dfa4d3e86547))
+
 ## [1.1.3](https://github.com/StartupManch/gcp-mcp-server/compare/v1.1.2...v1.1.3) (2025-08-24)
 
 
