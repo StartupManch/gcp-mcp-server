@@ -1,3 +1,3 @@
-#!/Volumes/MacintoshSSDExt/homebrew/bin/node
+#!/usr/bin/env node
 
 require('./dist/index.js');
