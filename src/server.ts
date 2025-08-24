@@ -86,6 +86,94 @@ class GCPMCPServer {
             result = await this.toolHandlers.getCostForecast(args as ToolCallArgs);
             break;
 
+          // Compute Engine Tools
+          case 'list-compute-instances':
+            result = await this.toolHandlers.listComputeInstances(args as ToolCallArgs);
+            break;
+
+          case 'get-compute-instance':
+            result = await this.toolHandlers.getComputeInstance(args as ToolCallArgs);
+            break;
+
+          case 'start-compute-instance':
+            result = await this.toolHandlers.startComputeInstance(args as ToolCallArgs);
+            break;
+
+          case 'stop-compute-instance':
+            result = await this.toolHandlers.stopComputeInstance(args as ToolCallArgs);
+            break;
+
+          // Cloud Storage Tools
+          case 'list-storage-buckets':
+            result = await this.toolHandlers.listStorageBuckets(args as ToolCallArgs);
+            break;
+
+          case 'list-storage-objects':
+            result = await this.toolHandlers.listStorageObjects(args as ToolCallArgs);
+            break;
+
+          case 'get-storage-object-info':
+            result = await this.toolHandlers.getStorageObjectInfo(args as ToolCallArgs);
+            break;
+
+          // BigQuery Tools
+          case 'list-bigquery-datasets':
+            result = await this.toolHandlers.listBigQueryDatasets(args as ToolCallArgs);
+            break;
+
+          case 'list-bigquery-tables':
+            result = await this.toolHandlers.listBigQueryTables(args as ToolCallArgs);
+            break;
+
+          case 'query-bigquery':
+            result = await this.toolHandlers.queryBigQuery(args as ToolCallArgs);
+            break;
+
+          // Cloud SQL Tools
+          case 'list-sql-instances':
+            result = await this.toolHandlers.listSqlInstances(args as ToolCallArgs);
+            break;
+
+          case 'get-sql-instance':
+            result = await this.toolHandlers.getSqlInstance(args as ToolCallArgs);
+            break;
+
+          // Cloud Functions Tools
+          case 'list-cloud-functions':
+            result = await this.toolHandlers.listCloudFunctions(args as ToolCallArgs);
+            break;
+
+          case 'get-cloud-function':
+            result = await this.toolHandlers.getCloudFunction(args as ToolCallArgs);
+            break;
+
+          // Cloud Run Tools
+          case 'list-cloud-run-services':
+            result = await this.toolHandlers.listCloudRunServices(args as ToolCallArgs);
+            break;
+
+          case 'get-cloud-run-service':
+            result = await this.toolHandlers.getCloudRunService(args as ToolCallArgs);
+            break;
+
+          // GKE Tools
+          case 'list-gke-clusters':
+            result = await this.toolHandlers.listGkeClusters(args as ToolCallArgs);
+            break;
+
+          case 'get-gke-cluster':
+            result = await this.toolHandlers.getGkeCluster(args as ToolCallArgs);
+            break;
+
+          // Cloud Logging Tools
+          case 'query-logs':
+            result = await this.toolHandlers.queryLogs(args as ToolCallArgs);
+            break;
+
+          case 'list-log-entries':
+            result = await this.toolHandlers.listLogEntries(args as ToolCallArgs);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
