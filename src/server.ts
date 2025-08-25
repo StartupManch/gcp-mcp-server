@@ -174,6 +174,109 @@ class GCPMCPServer {
             result = await this.toolHandlers.listLogEntries(args as ToolCallArgs);
             break;
 
+          // IAM Management Tools
+          case 'list-iam-policies':
+            result = await this.toolHandlers.listIamPolicies(args as ToolCallArgs);
+            break;
+
+          case 'get-iam-policy':
+            result = await this.toolHandlers.getIamPolicy(args as ToolCallArgs);
+            break;
+
+          case 'set-iam-policy':
+            result = await this.toolHandlers.setIamPolicy(args as ToolCallArgs);
+            break;
+
+          case 'add-iam-binding':
+            result = await this.toolHandlers.addIamBinding(args as ToolCallArgs);
+            break;
+
+          case 'remove-iam-binding':
+            result = await this.toolHandlers.removeIamBinding(args as ToolCallArgs);
+            break;
+
+          case 'list-service-accounts':
+            result = await this.toolHandlers.listServiceAccounts(args as ToolCallArgs);
+            break;
+
+          case 'create-service-account':
+            result = await this.toolHandlers.createServiceAccount(args as ToolCallArgs);
+            break;
+
+          case 'delete-service-account':
+            result = await this.toolHandlers.deleteServiceAccount(args as ToolCallArgs);
+            break;
+
+          case 'list-custom-roles':
+            result = await this.toolHandlers.listCustomRoles(args as ToolCallArgs);
+            break;
+
+          case 'create-custom-role':
+            result = await this.toolHandlers.createCustomRole(args as ToolCallArgs);
+            break;
+
+          // FinOps & Cost Management Tools
+          case 'get-billing-account':
+            result = await this.toolHandlers.getBillingAccount(args as ToolCallArgs);
+            break;
+
+          case 'list-billing-accounts':
+            result = await this.toolHandlers.listBillingAccounts(args as ToolCallArgs);
+            break;
+
+          case 'set-project-billing':
+            result = await this.toolHandlers.setProjectBilling(args as ToolCallArgs);
+            break;
+
+          case 'get-cost-breakdown':
+            result = await this.toolHandlers.getCostBreakdown(args as ToolCallArgs);
+            break;
+
+          case 'create-budget':
+            result = await this.toolHandlers.createBudget(args as ToolCallArgs);
+            break;
+
+          case 'list-budgets':
+            result = await this.toolHandlers.listBudgets(args as ToolCallArgs);
+            break;
+
+          case 'update-budget':
+            result = await this.toolHandlers.updateBudget(args as ToolCallArgs);
+            break;
+
+          case 'delete-budget':
+            result = await this.toolHandlers.deleteBudget(args as ToolCallArgs);
+            break;
+
+          case 'get-cost-anomalies':
+            result = await this.toolHandlers.getCostAnomalies(args as ToolCallArgs);
+            break;
+
+          case 'get-rightsizing-recommendations':
+            result = await this.toolHandlers.getRightsizingRecommendations(args as ToolCallArgs);
+            break;
+
+          case 'export-billing-data':
+            result = await this.toolHandlers.exportBillingData(args as ToolCallArgs);
+            break;
+
+          // Organization Policy Management Tools
+          case 'list-organization-policies':
+            result = await this.toolHandlers.listOrganizationPolicies(args as ToolCallArgs);
+            break;
+
+          case 'get-organization-policy':
+            result = await this.toolHandlers.getOrganizationPolicy(args as ToolCallArgs);
+            break;
+
+          case 'set-organization-policy':
+            result = await this.toolHandlers.setOrganizationPolicy(args as ToolCallArgs);
+            break;
+
+          case 'delete-organization-policy':
+            result = await this.toolHandlers.deleteOrganizationPolicy(args as ToolCallArgs);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }

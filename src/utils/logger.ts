@@ -18,19 +18,19 @@ class Logger {
 
   debug(message: string, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.DEBUG) {
-      console.debug(`[DEBUG] ${new Date().toISOString()} - ${message}`, ...args);
+      console.error(`[DEBUG] ${new Date().toISOString()} - ${message}`, ...args);
     }
   }
 
   info(message: string, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.INFO) {
-      console.log(`[INFO] ${new Date().toISOString()} - ${message}`, ...args);
+      console.error(`[INFO] ${new Date().toISOString()} - ${message}`, ...args);
     }
   }
 
   warn(message: string, ...args: unknown[]): void {
     if (this.logLevel <= LogLevel.WARN) {
-      console.warn(`[WARN] ${new Date().toISOString()} - ${message}`, ...args);
+      console.error(`[WARN] ${new Date().toISOString()} - ${message}`, ...args);
     }
   }
 

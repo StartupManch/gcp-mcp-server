@@ -22,7 +22,7 @@ export interface RetryState {
 export async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions = {}): Promise<T> {
   const { maxRetries = 3, delay = 1000, exponentialBackoff = false } = options;
 
-  let lastError: Error | any;
+  let lastError: Error | unknown;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
@@ -55,7 +55,7 @@ export async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions =
  * @param options Default retry options
  * @returns Retryable function
  */
-export function makeRetryable<T extends any[], R>(
+export function makeRetryable<T extends unknown[], R>(
   fn: (...args: T) => Promise<R>,
   options: RetryOptions = {}
 ): (...args: T) => Promise<R> {
@@ -69,27 +69,41 @@ export function makeRetryable<T extends any[], R>(
  * @param error Error to check
  * @returns True if the error should be retried
  */
-export function isRetryableError(error: any): boolean {
+export function isRetryableError(error: unknown): boolean {
   if (!error) return false;
+
+  // Type guard to check if error has expected properties
+  const hasCode = (err: unknown): err is { code: string } => {
+    return typeof err === 'object' && err !== null && 'code' in err;
+  };
+
+  const hasStatus = (err: unknown): err is { status: number } => {
+    return typeof err === 'object' && err !== null && 'status' in err;
+  };
+
+  const hasMessage = (err: unknown): err is { message: string } => {
+    return typeof err === 'object' && err !== null && 'message' in err;
+  };
 
   // Network errors are typically retryable
   if (
-    error.code === 'ECONNRESET' ||
-    error.code === 'ENOTFOUND' ||
-    error.code === 'ECONNREFUSED' ||
-    error.code === 'ETIMEDOUT'
+    hasCode(error) &&
+    (error.code === 'ECONNRESET' ||
+      error.code === 'ENOTFOUND' ||
+      error.code === 'ECONNREFUSED' ||
+      error.code === 'ETIMEDOUT')
   ) {
     return true;
   }
 
   // HTTP status codes that are retryable
-  if (error.status) {
+  if (hasStatus(error)) {
     const retryableStatusCodes = [408, 429, 500, 502, 503, 504];
     return retryableStatusCodes.includes(error.status);
   }
 
   // GCP API specific errors
-  if (error.message) {
+  if (hasMessage(error)) {
     const retryableMessages = [
       'timeout',
       'rate limit',
@@ -117,7 +131,7 @@ export async function withConditionalRetry<T>(
 ): Promise<T> {
   const { maxRetries = 3, delay = 1000, exponentialBackoff = false } = options;
 
-  let lastError: Error | any;
+  let lastError: Error | unknown;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
