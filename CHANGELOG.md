@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.4.0](https://github.com/StartupManch/gcp-mcp-server/compare/v1.3.0...v1.4.0) (2025-09-02)
+
+
+### Bug Fixes
+
+* Change logging methods to use console.error for all log levels ([e459196](https://github.com/StartupManch/gcp-mcp-server/commit/e4591964edb4cec293dc2f7b9427291c17f6638c))
+
+
+### Features
+
+* Implement IAM Management Handlers and Definitions ([3826b57](https://github.com/StartupManch/gcp-mcp-server/commit/3826b57ce9996ec3db4f95e44adcb91f5adef8c6))
+
 # [1.3.0](https://github.com/StartupManch/gcp-mcp-server/compare/v1.2.0...v1.3.0) (2025-08-24)
 
 
