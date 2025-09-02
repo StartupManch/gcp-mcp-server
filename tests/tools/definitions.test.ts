@@ -1,4 +1,4 @@
-const { gcpTools } = require('../../src/tools/definitions');
+const { gcpTools } = require('../../src/tools');
 
 describe('Tool Definitions', () => {
   describe('Tool structure', () => {
@@ -189,13 +189,44 @@ describe('Tool Definitions', () => {
         expect(schema).toHaveProperty('type');
         expect(schema).toHaveProperty('properties');
 
-        // Some tools don't require projectId (like storage tools that work with bucket names directly)
-        // and some tools like list-projects and run-gcp-code handle projects differently
+        // Tools that don't require projectId due to their scope or design:
         const toolsWithoutProjectId = [
+          // Project management tools
           'list-projects',
           'run-gcp-code',
+
+          // Storage tools that work directly with bucket names
           'list-storage-objects',
           'get-storage-object-info',
+
+          // Billing account level tools (use billingAccountId instead)
+          'get-billing-account',
+          'list-billing-accounts',
+          'create-budget',
+          'list-budgets',
+          'update-budget',
+          'delete-budget',
+          'get-cost-anomalies',
+          'get-rightsizing-recommendations',
+          'export-billing-data',
+
+          // IAM tools (use resourceId + resourceType for flexibility)
+          'list-iam-policies',
+          'get-iam-policy',
+          'set-iam-policy',
+          'add-iam-binding',
+          'remove-iam-binding',
+          'list-service-accounts',
+          'create-service-account',
+          'delete-service-account',
+          'list-custom-roles',
+          'create-custom-role',
+
+          // Organization Policy tools (use resourceId + resourceType)
+          'list-organization-policies',
+          'get-organization-policy',
+          'set-organization-policy',
+          'delete-organization-policy',
         ];
 
         if (!toolsWithoutProjectId.includes(tool.name)) {
