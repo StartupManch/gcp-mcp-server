@@ -140,7 +140,9 @@ sequenceDiagram
         Server-->>MCP: Error details
         MCP-->>AI: User-friendly error
     end
-```### 4. GCP Services Integration
+```
+
+### 4. GCP Services Integration
 
 ```mermaid
 flowchart LR
